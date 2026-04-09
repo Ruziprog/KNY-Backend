@@ -1,0 +1,60 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Истребители Демонов{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Истребители Демонов</h1>
+    <p>Знакомьтесь с Истребителями Демонов</p>
+</div>
+
+<div class="characters-grid">
+    {% for character in characters %}
+    <div class="character-card" data-character="{{ character.name }}">
+        <div class="character-image">
+            <a href="/character/{{ character.id }}/">
+                {% if character.image_url %}
+                    <img src="{{ character.image_url }}" alt="{{ character.name }}">
+                {% else %}
+                    <div class="no-image">Нет изображения</div>
+                {% endif %}
+            </a>
+        </div>
+        <div class="character-info">
+            <h3>
+                <a href="/character/{{ character.id }}/" style="text-decoration: none; color: inherit;">
+                    {{ character.name }}
+                </a>
+            </h3>
+            <p class="description">{{ character.description|truncatewords:20 }}</p>
+            {% if character.quote %}
+                <p class="quote">"{{ character.quote|truncatewords:10 }}"</p>
+            {% endif %}
+            <a href="/character/{{ character.id }}/" class="read-more">Подробнее →</a>
+        </div>
+    </div>
+    {% empty %}
+    <p>Персонажи еще не добавлены в базу данных</p>
+    {% endfor %}
+</div>
+
+<style>
+.read-more {
+    display: inline-block;
+    margin-top: 1rem;
+    color: #b87c4f;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.read-more:hover {
+    color: #8b5a2b;
+}
+
+.character-image a {
+    display: block;
+    cursor: pointer;
+}
+</style>
+{% endblock %}

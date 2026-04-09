@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  web:
+    build: .  # ← важно: нужно указать точку (текущую папку)
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - DEBUG=1
+      - DB_NAME=demonsite           # добавляем настройки БД
+      - DB_USER=demouser
+      - DB_PASSWORD=demopassword
+      - DB_HOST=db
+      - DB_PORT=5432
+    depends_on:
+      - db
+    command: python manage.py runserver 0.0.0.0:8000  # добавляем команду запуска
+  
+  db:
+    image: postgres:15  # можно оставить 13, но 15 новее
+    environment:
+      - POSTGRES_DB=demonsite       # меняем на demonsite
+      - POSTGRES_USER=demouser      # меняем на demouser
+      - POSTGRES_PASSWORD=demopassword  # меняем на demopassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

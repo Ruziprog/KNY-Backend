@@ -1,0 +1,34 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Демоны{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Демоны</h1>
+    <p>Враги человечества, обладающие сверхъестественными способностями</p>
+</div>
+
+<div class="characters-grid">
+    {% for demon in demons %}
+    <div class="character-card">
+        <div class="character-image">
+            {% if demon.image_url %}
+            <img src="{{ demon.image_url }}" alt="{{ demon.name }}">
+            {% endif %}
+        </div>
+        <div class="character-info">
+            <h3>{{ demon.name }}</h3>
+            {% if demon.rank %}
+            <p class="title">Ранг: {{ demon.rank }}</p>
+            {% endif %}
+            <p class="description">{{ demon.description|truncatewords:30 }}</p>
+            {% if demon.blood_art %}
+            <p class="ability">Кровавое искусство: {{ demon.blood_art }}</p>
+            {% endif %}
+            {% if demon.quote %}
+            <p class="quote">"{{ demon.quote }}"</p>
+            {% endif %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

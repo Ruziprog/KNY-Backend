@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demon Slayer - {% block title %}{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Yuji+Syuku&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>鬼滅の刃</h1>
+                <span>Demon Slayer</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="{% url 'index' %}">Главная</a></li>
+                <li><a href="{% url 'characters' %}">Герои</a></li>
+                <li><a href="{% url 'hashira' %}">Столпы</a></li>
+                <li><a href="{% url 'demons' %}">Демоны</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Demon Slayer Fan Site. Все права защищены.</p>
+    </footer>
+
+    <script src="{% static 'main/js/script.js' %}"></script>
+</body>
+</html>

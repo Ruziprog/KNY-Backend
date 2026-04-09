@@ -1,0 +1,47 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Столпы{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Столпы Демонов</h1>
+    <p>Элитные охотники на демонов - сильнейшие из Корпуса</p>
+</div>
+
+{% if error_message %}
+    <div class="alert alert-danger" role="alert">
+        {{ error_message }}
+    </div>
+{% endif %}
+
+<div class="hashira-grid">
+    {% for pillar in hashira %}
+    <div class="hashira-card">
+        <div class="hashira-image">
+            <!-- Исправлено: image_url вместо image -->
+             {% if pillar.image_url %}
+            <img src="{{ pillar.image_url }}" alt="{{ pillar.name }}">
+            {% else %}
+            <p>Изображение недоступно</p>
+            {% endif %}
+
+        </div>
+        <div class="hashira-info">
+            <h3>{{ pillar.name }}</h3>
+            {% if pillar.title %}
+            <p class="title">{{ pillar.title }}</p>
+            {% endif %}
+            {% if pillar.ability %}
+            <p class="ability">{{ pillar.ability }}</p>
+            {% endif %}
+            {% if pillar.description %}
+            <p class="description">{{ pillar.description }}</p>
+            {% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <p>Столпы еще не добавлены в базу данных</p>
+    {% endfor %}
+</div>
+{% endblock %}
+

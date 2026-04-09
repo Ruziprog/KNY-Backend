@@ -1,0 +1,135 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ character.name }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>{{ character.name }}</h1>
+    {% if character.title %}
+        <p>{{ character.title }}</p>
+    {% endif %}
+</div>
+
+<div class="character-detail">
+    <div class="detail-container">
+        <div class="detail-image">
+            {% if character.image_url %}
+                <img src="{{ character.image_url }}" alt="{{ character.name }}">
+            {% else %}
+                <div class="no-image">Нет изображения</div>
+            {% endif %}
+        </div>
+        
+        <div class="detail-info">
+            <div class="info-section">
+                <h2>Биография</h2>
+                <p>{{ character.description }}</p>
+            </div>
+            
+            {% if character.ability %}
+            <div class="info-section">
+                <h2>Способности</h2>
+                <p>{{ character.ability }}</p>
+            </div>
+            {% endif %}
+            
+            {% if character.quote %}
+            <div class="info-section quote-section">
+                <h2>Цитата</h2>
+                <blockquote>"{{ character.quote }}"</blockquote>
+            </div>
+            {% endif %}
+            
+            {% if character.is_hashira %}
+            <div class="info-section hashira-badge">
+                <span class="badge">🌟 Столп</span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="back-button">
+        <a href="{% url 'characters' %}" class="btn">← Назад к героям</a>
+    </div>
+</div>
+
+<style>
+.character-detail {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #fffef7;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.detail-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+.detail-image img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.info-section {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px dashed #e0cfb0;
+}
+
+.info-section h2 {
+    color: #8b5a2b;
+    font-family: 'Yuji Syuku', cursive;
+    margin-bottom: 1rem;
+}
+
+.quote-section blockquote {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #5c4b2c;
+    padding-left: 1.5rem;
+    border-left: 3px solid #b87c4f;
+}
+
+.hashira-badge .badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #d4a373, #b87c4f);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-weight: bold;
+}
+
+.back-button {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.back-button .btn {
+    background: #8b5a2b;
+    color: #fef7e0;
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    transition: all 0.3s;
+    display: inline-block;
+}
+
+.back-button .btn:hover {
+    background: #a8753a;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .detail-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+}
+</style>
+{% endblock %}
