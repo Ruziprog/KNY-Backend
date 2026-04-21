@@ -1,5 +1,4 @@
-name: CI
-
+name: CI/CD
 on:
   push:
     branches: [ main, master ]
@@ -17,7 +16,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11'  # ← ИЗМЕНИТЕ с 3.14 на 3.11
+        python-version: '3.11'
     
     - name: Debug - list files
       run: |
