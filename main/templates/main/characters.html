@@ -56,5 +56,62 @@
     display: block;
     cursor: pointer;
 }
+
+.pagination {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.pagination-inner {
+    display: inline-flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.pagination-link {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.pagination-link:hover {
+    background-color: #b87c4f;
+    color: white;
+}
+
+.pagination-current {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #b87c4f;
+    color: white;
+    border-radius: 6px;
+}
+
 </style>
+
+<!-- Пагинация -->
+{% if characters.has_other_pages %}
+<div class="pagination">
+    <div class="pagination-inner">
+        {% if characters.has_previous %}
+            <a href="?page=1" class="pagination-link">&laquo; Первая</a>
+            <a href="?page={{ characters.previous_page_number }}" class="pagination-link">‹ Предыдущая</a>
+        {% endif %}
+
+        <span class="pagination-current">
+            Страница {{ characters.number }} из {{ characters.paginator.num_pages }}
+        </span>
+
+        {% if characters.has_next %}
+            <a href="?page={{ characters.next_page_number }}" class="pagination-link">Следующая ›</a>
+            <a href="?page={{ characters.paginator.num_pages }}" class="pagination-link">Последняя &raquo;</a>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
 {% endblock %}

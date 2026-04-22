@@ -28,7 +28,29 @@
             {% if demon.quote %}
             <p class="quote">"{{ demon.quote }}"</p>
             {% endif %}
+        </div>  <!-- ← Этого не хватало -->
     </div>
     {% endfor %}
 </div>
+
+<!-- Пагинация -->
+{% if demons.has_other_pages %}
+<div class="pagination">
+    <div class="pagination-inner">
+        {% if demons.has_previous %}
+            <a href="?page=1" class="pagination-link">&laquo; Первая</a>
+            <a href="?page={{ demons.previous_page_number }}" class="pagination-link">‹ Предыдущая</a>
+        {% endif %}
+
+        <span class="pagination-current">
+            Страница {{ demons.number }} из {{ demons.paginator.num_pages }}
+        </span>
+
+        {% if demons.has_next %}
+            <a href="?page={{ demons.next_page_number }}" class="pagination-link">Следующая ›</a>
+            <a href="?page={{ demons.paginator.num_pages }}" class="pagination-link">Последняя &raquo;</a>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
 {% endblock %}

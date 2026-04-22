@@ -2,6 +2,7 @@ from django.db import OperationalError
 from django.shortcuts import render
 from main.models import Character, Demon
 from rest_framework import viewsets
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .serializers import CharacterSerializer, DemonSerializer
 from django.shortcuts import get_object_or_404
 # get_object_or_404 - это функция, которая пытается получить объект из базы данных по заданным параметрам. 
@@ -13,7 +14,15 @@ def index(request):
 def characters(request):
     """Страница с персонажами"""
     try:
-        characters = Character.objects.all()
+        all_characters = Character.objects.all()
+        paginator = Paginator(all_characters, 12)
+        page = request.GET.get('page', 1)
+        try:
+            characters = paginator.page(page)
+        except PageNotAnInteger:
+            characters = paginator.page(1)
+        except EmptyPage:
+            characters = paginator.page(paginator.num_pages)
         return render(request, 'main/characters.html', {'characters': characters})
     except OperationalError as e:
         error_message = f"Ошибка доступа к базе данных: {str(e)}"
@@ -25,7 +34,15 @@ def characters(request):
 def hashira(request):
     """Страница со столпами"""
     try:
-        hashira = Character.objects.filter(is_hashira=True)
+        all_hashira = Character.objects.filter(is_hashira=True)
+        paginator = Paginator(all_hashira, 12)
+        page = request.GET.get('page', 1)
+        try:
+            hashira = paginator.page(page)
+        except PageNotAnInteger:
+            hashira = paginator.page(1)
+        except EmptyPage:
+            hashira = paginator.page(paginator.num_pages)
         return render(request, 'main/hashira.html', {'hashira': hashira})
     except OperationalError as e:
         error_message = f"Ошибка доступа к базе данных: {str(e)}"
@@ -37,7 +54,15 @@ def hashira(request):
 def demons(request):
     """Страница с демонами"""
     try:
-        demons = Demon.objects.all()
+        all_demon = Character.objects.all()
+        paginator = Paginator(all_demon, 12)
+        page = request.GET.get('page', 1)
+        try:
+            demons = paginator.page(page)
+        except PageNotAnInteger:
+            demons = paginator.page(1)
+        except EmptyPage:
+            demons = paginator.page(paginator.num_pages)
         return render(request, 'main/demons.html', {'demons': demons})
     except OperationalError as e:
         error_message = f"Ошибка доступа к базе данных: {str(e)}"
@@ -65,3 +90,4 @@ def character_detail(request, character_id):
     except Exception as e:
         error_message = f"Произошла ошибка: {str(e)}"
         return render(request, 'main/character_detail.html', {'error_message': error_message})
+    

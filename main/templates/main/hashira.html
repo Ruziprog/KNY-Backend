@@ -43,5 +43,26 @@
     <p>Столпы еще не добавлены в базу данных</p>
     {% endfor %}
 </div>
+
+<!-- Пагинация -->
+{% if hashira.has_other_pages %}
+<div class="pagination">
+    <div class="pagination-inner">
+        {% if hashira.has_previous %}
+            <a href="?page=1" class="pagination-link">&laquo; Первая</a>
+            <a href="?page={{ hashira.previous_page_number }}" class="pagination-link">‹ Предыдущая</a>
+        {% endif %}
+
+        <span class="pagination-current">
+            Страница {{ hashira.number }} из {{ hashira.paginator.num_pages }}
+        </span>
+
+        {% if hashira.has_next %}
+            <a href="?page={{ hashira.next_page_number }}" class="pagination-link">Следующая ›</a>
+            <a href="?page={{ hashira.paginator.num_pages }}" class="pagination-link">Последняя &raquo;</a>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
 {% endblock %}
 
